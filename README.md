@@ -1,6 +1,6 @@
 This will let you load SFX made with [rfxgen](https://raylibtech.itch.io/rfxgen) in [pntr_app](https://github.com/robloach/pntr_app).
 
-It allows you add & generate very small sound-effects to your game, with a [single header](pntr_app.sfx.h).
+It allows you add & generate very small sound-effects to your game, with a [single header](pntr_app_sfx.h).
 
 
 Basic usage looks like this:
