@@ -24,13 +24,11 @@ jobs:
       - name: Setup Ninja
         run: sudo apt update && sudo apt install -y ninja-build
       - name: Build Site
-        run: cd example && emcmake cmake -G Ninja -B build -DPLATFORM=Web && cmake --build build
-      - name: Build Site
-        run: mkdir -p dist && mv example/build/*.data example/build/*.js dist/ && mv example/build/*.html dist/index.html
+        run: cd example && emcmake cmake -G Ninja -B build -DPLATFORM=Web && cmake --build build && mkdir -p dist && mv example/build/*.data example/build/*.js dist/ && mv example/build/*.html dist/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: 'example/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
