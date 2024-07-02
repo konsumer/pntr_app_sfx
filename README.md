@@ -17,6 +17,14 @@ pntr_app_sfx_gen_jump(app, &params);
 pntr_sound* jumpy = pntr_app_sfx_sound(app, &params);
 ```
 
+I have included [an example](example), too. You can build it with this:
+
+```
+cd example
+cmake -B build
+cmake --build build
+```
+
 ## API
 
 ```c
