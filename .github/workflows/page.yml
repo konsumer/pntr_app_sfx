@@ -19,13 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          cache: 'npm'
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v14
-      - name: Setup Nionja
+      - name: Setup Ninja
         run: sudo apt update && sudo apt install -y ninja-build
       - name: Build Site
         run: emcmake cmake -G Ninja -B build -DPLATFORM=Web && cmake --build build
