@@ -44,6 +44,8 @@ bool Update(pntr_app* app, pntr_image* screen) {
 void Close(pntr_app* app) {
   AppData* appData = (AppData*)pntr_app_userdata(app);
   pntr_unload_sound(appData->sfx);
+  pntr_unload_font(appData->font);
+  pntr_unload_memory(appData);
 }
 
 void Event(pntr_app* app, pntr_app_event* event) {
