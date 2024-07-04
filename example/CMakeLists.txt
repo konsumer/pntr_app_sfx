@@ -37,6 +37,12 @@ FetchContent_Declare(raylib
   URL https://github.com/raysan5/raylib/archive/refs/heads/master.zip
 )
 FetchContent_MakeAvailable(raylib)
+
+FetchContent_Declare(pntr_nuklear
+  URL https://github.com/RobLoach/pntr_nuklear/archive/refs/heads/master.zip
+)
+FetchContent_MakeAvailable(pntr_nuklear)
+
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
 
@@ -44,3 +50,6 @@ add_executable(pntr_app_sfx_example pntr_app_sfx_example.c)
 target_link_libraries(pntr_app_sfx_example pntr pntr_app raylib)
 target_include_directories(pntr_app_sfx_example PRIVATE "${CMAKE_CURRENT_LIST_DIR}/.." "${raylib_SOURCE_DIR}/src")
 
+add_executable(pntr_app_sfx_gen pntr_app_sfx_gen.c)
+target_link_libraries(pntr_app_sfx_gen pntr pntr_app pntr_nuklear raylib)
+target_include_directories(pntr_app_sfx_gen PRIVATE "${CMAKE_CURRENT_LIST_DIR}/.." "${raylib_SOURCE_DIR}/src")
