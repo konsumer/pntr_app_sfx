@@ -136,6 +136,7 @@ pntr_sound* pntr_app_sfx_sound(pntr_app* app, SfxParams* params);
 
 #ifdef PNTR_APP_SFX_IMPLEMENTATION
 #ifndef PNTR_APP_SFX_IMPLEMENTATION_ONCE
+#define PNTR_APP_SFX_IMPLEMENTATION_ONCE
 
 #ifndef PNTR_POW
 #ifdef PNTR_ENABLE_MATH
