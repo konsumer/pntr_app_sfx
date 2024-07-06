@@ -128,10 +128,10 @@ bool Update(pntr_app* app, pntr_image* screen) {
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.minFrequency, 1.0f, 0.05f);
 
     nk_label(ctx, "Slide:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.slide, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.slide, 1.0f, 0.05f);
 
     nk_label(ctx, "Delta Slide:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.deltaSlide, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.deltaSlide, 1.0f, 0.05f);
 
     nk_label(ctx, "Vibrato Depth:", NK_TEXT_LEFT);
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.vibratoDepth, 1.0f, 0.05f);
@@ -140,7 +140,7 @@ bool Update(pntr_app* app, pntr_image* screen) {
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.vibratoSpeed, 1.0f, 0.05f);
 
     nk_label(ctx, "Change Amount:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.changeAmount, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.changeAmount, 1.0f, 0.05f);
 
     nk_label(ctx, "Change Speed:", NK_TEXT_LEFT);
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.changeSpeed, 1.0f, 0.05f);
@@ -149,22 +149,22 @@ bool Update(pntr_app* app, pntr_image* screen) {
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.squareDuty, 1.0f, 0.05f);
 
     nk_label(ctx, "Duty Sweep:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.dutySweep, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.dutySweep, 1.0f, 0.05f);
 
     nk_label(ctx, "Repeat Speed:", NK_TEXT_LEFT);
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.repeatSpeed, 1.0f, 0.05f);
 
     nk_label(ctx, "Phaser Offset:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.phaserOffset, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.phaserOffset, 1.0f, 0.05f);
 
     nk_label(ctx, "Phaser Sweep:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.phaserSweep, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.phaserSweep, 1.0f, 0.05f);
 
     nk_label(ctx, "lpfCutoff:", NK_TEXT_LEFT);
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.lpfCutoff, 1.0f, 0.05f);
 
     nk_label(ctx, "lpfCutoffSweep:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.lpfCutoffSweep, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.lpfCutoffSweep, 1.0f, 0.05f);
 
     nk_label(ctx, "lpfResonance:", NK_TEXT_LEFT);
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.lpfResonance, 1.0f, 0.05f);
@@ -173,7 +173,7 @@ bool Update(pntr_app* app, pntr_image* screen) {
     nk_slider_float(ctx, 0.0f, &appData->sfx_params.hpfCutoff, 1.0f, 0.05f);
 
     nk_label(ctx, "hpfCutoffSweep:", NK_TEXT_LEFT);
-    nk_slider_float(ctx, 0.0f, &appData->sfx_params.hpfCutoffSweep, 1.0f, 0.05f);
+    nk_slider_float(ctx, -1.0f, &appData->sfx_params.hpfCutoffSweep, 1.0f, 0.05f);
   }
   nk_end(ctx);
 
