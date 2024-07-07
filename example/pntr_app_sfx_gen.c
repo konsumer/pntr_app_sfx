@@ -17,17 +17,14 @@ typedef struct AppData {
   struct nk_context* ctx;
 } AppData;
 
+// this will allow user to select a save-file and download
 #ifdef EMSCRIPTEN
-EM_JS(void, download_file, (char* filenamePtr, unsigned char* dataPtr, int size, char* mimeTypePtr), {
-  const a = document.createElement('a');
-  a.style = 'display:none';
-  document.body.appendChild(a);
+EM_ASYNC_JS(void, download_rfx_file, (unsigned char* dataPtr, int size, char* suggestedNamePtr, char* startInPtr, char* mimeTypePtr), {
+  const f = await showSaveFilePicker({suggestedName : UTF8ToString(suggestedNamePtr), startIn : startInPtr});
+  const writableStream = await f.createWritable();
   const blob = new Blob([new Uint8Array(Module.HEAPU8.buffer, dataPtr, size)], { type: UTF8ToString(mimeTypePtr) });
-  a.href = window.URL.createObjectURL(blob);
-  a.download = UTF8ToString(filenamePtr);
-  a.click();
-  window.URL.revokeObjectURL(a.href);
-  document.body.removeChild(a);
+  await writableStream.write(blob);
+  await writableStream.close();
 });
 #endif  // EMSCRIPTEN
 
@@ -121,8 +118,8 @@ bool Update(pntr_app* app, pntr_image* screen) {
   if (nk_begin(ctx, "Save", nk_rect((screen->width / 3) + (screen->width / 3), 0, (screen->width / 3), screen->height / 6), NK_WINDOW_NO_SCROLLBAR)) {
     nk_layout_row_dynamic(ctx, 0, 1);
     if (nk_button_label(ctx, "Save")) {
+      // build file-string
       unsigned char fileData[104] = {0};
-
       char* signature = "rFX ";
       short int version = 200;
       short int len = 96;
@@ -131,7 +128,7 @@ bool Update(pntr_app* app, pntr_image* screen) {
       PNTR_MEMCPY(fileData + 6, &len, 2);
       PNTR_MEMCPY(fileData + 8, &appData->sfx_params, 96);
 
-      download_file("sound.rfx", fileData, 104, "octet/stream");
+      download_rfx_file(fileData, 104, "sound.rfx", "downloads", "octet/stream");
     }
   }
   nk_end(ctx);
