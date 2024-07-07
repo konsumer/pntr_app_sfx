@@ -1,3 +1,5 @@
+#include <string.h>
+
 #define PNTR_APP_IMPLEMENTATION
 #define PNTR_ENABLE_DEFAULT_FONT
 #define PNTR_ENABLE_VARGS
@@ -33,14 +35,15 @@ EM_ASYNC_JS(void, download_rfx_file, (unsigned char* dataPtr, int size, char* su
 #endif  // EMSCRIPTEN
 
 // output the code on the console
-void print_code(SfxParams sfx_params) {
-  printf(
+void save_code(pntr_app* app, SfxParams sfx_params) {
+  char code[1024];
+  snprintf(code, 1024,
       "#define PNTR_APP_SFX_IMPLEMENTATION\n\
 #include \"pntr_app_sfx.h\"\n\
 \n\
 SfxParams gen_sound_effect() {\n\
   return (SfxParams) {\n\
-    .randSeed=%ff,\n\
+    .randSeed=%lu,\n\
     .waveType=%d,\n\
     .attackTime=%ff,\n\
     .sustainTime=%ff,\n\
@@ -65,7 +68,11 @@ SfxParams gen_sound_effect() {\n\
     .hpfCutoff=%ff,\n\
     .hpfCutoffSweep=%ff };\n\
 }\n",
-      sfx_params.randSeed, sfx_params.waveType, sfx_params.attackTime, sfx_params.sustainTime, sfx_params.sustainPunch, sfx_params.decayTime, sfx_params.startFrequency, sfx_params.minFrequency, sfx_params.slide, sfx_params.deltaSlide, sfx_params.vibratoDepth, sfx_params.vibratoSpeed, sfx_params.changeAmount, sfx_params.changeSpeed, sfx_params.squareDuty, sfx_params.dutySweep, sfx_params.repeatSpeed, sfx_params.phaserOffset, sfx_params.phaserSweep, sfx_params.lpfCutoff, sfx_params.lpfCutoffSweep, sfx_params.lpfResonance, sfx_params.hpfCutoff, sfx_params.hpfCutoffSweep);
+      (unsigned long)sfx_params.randSeed, sfx_params.waveType, sfx_params.attackTime, sfx_params.sustainTime, sfx_params.sustainPunch, sfx_params.decayTime, sfx_params.startFrequency, sfx_params.minFrequency, sfx_params.slide, sfx_params.deltaSlide, sfx_params.vibratoDepth, sfx_params.vibratoSpeed, sfx_params.changeAmount, sfx_params.changeSpeed, sfx_params.squareDuty, sfx_params.dutySweep, sfx_params.repeatSpeed, sfx_params.phaserOffset, sfx_params.phaserSweep, sfx_params.lpfCutoff, sfx_params.lpfCutoffSweep, sfx_params.lpfResonance, sfx_params.hpfCutoff, sfx_params.hpfCutoffSweep);
+
+  // Export it to the clipboard and the logs.
+  pntr_app_set_clipboard(app, code, 0);
+  printf("%s\n", code);
 }
 
 SfxParams gen_sound_effect() {
@@ -181,10 +188,10 @@ bool Update(pntr_app* app, pntr_image* screen) {
   nk_end(ctx);
 
   // Save
-  if (nk_begin(ctx, "Save", nk_rect((screen->width / 3) + (screen->width / 3), 0, (screen->width / 3), screen->height / 6), NK_WINDOW_NO_SCROLLBAR)) {
+  if (nk_begin(ctx, "Save / Copy to Clipboard", nk_rect((screen->width / 3) + (screen->width / 3), 0, (screen->width / 3), screen->height / 6), NK_WINDOW_NO_SCROLLBAR)) {
     nk_layout_row_dynamic(ctx, 0, 1);
     if (nk_button_label(ctx, "Save")) {
-      print_code(appData->sfx_params);
+      save_code(app, appData->sfx_params);
 
 #ifdef EMSCRIPTEN
       // build file-string
