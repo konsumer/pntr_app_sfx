@@ -653,7 +653,7 @@ bool pntr_app_sfx_save_params(SfxParams* params, const char* fileName) {
   char* signature = "rFX ";
   short int version = 200;
   short int len = 96;
-  PNTR_MEMCPY(&fileData, &signature, 4);
+  PNTR_MEMCPY(&fileData, signature, 4);
   PNTR_MEMCPY(fileData + 4, &version, 2);
   PNTR_MEMCPY(fileData + 6, &len, 2);
   PNTR_MEMCPY(fileData + 8, &params, 96);

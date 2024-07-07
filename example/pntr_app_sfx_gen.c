@@ -126,7 +126,7 @@ bool Update(pntr_app* app, pntr_image* screen) {
       char* signature = "rFX ";
       short int version = 200;
       short int len = 96;
-      PNTR_MEMCPY(&fileData, &signature, 4);
+      PNTR_MEMCPY(&fileData, signature, 4);
       PNTR_MEMCPY(fileData + 4, &version, 2);
       PNTR_MEMCPY(fileData + 6, &len, 2);
       PNTR_MEMCPY(fileData + 8, &appData->sfx_params, 96);
