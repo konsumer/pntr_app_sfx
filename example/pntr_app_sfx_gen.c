@@ -20,11 +20,15 @@ typedef struct AppData {
 // this will allow user to select a save-file and download
 #ifdef EMSCRIPTEN
 EM_ASYNC_JS(void, download_rfx_file, (unsigned char* dataPtr, int size, char* suggestedNamePtr, char* startInPtr, char* mimeTypePtr), {
-  const f = await showSaveFilePicker({suggestedName : UTF8ToString(suggestedNamePtr), startIn : UTF8ToString(startInPtr)});
-  const writableStream = await f.createWritable();
-  const blob = new Blob([new Uint8Array(Module.HEAPU8.buffer, dataPtr, size)], { type: UTF8ToString(mimeTypePtr) });
-  await writableStream.write(blob);
-  await writableStream.close();
+  try {
+    const f = await showSaveFilePicker({suggestedName : UTF8ToString(suggestedNamePtr), startIn : UTF8ToString(startInPtr)});
+    const writableStream = await f.createWritable();
+    const blob = new Blob([new Uint8Array(Module.HEAPU8.buffer, dataPtr, size)], { type: UTF8ToString(mimeTypePtr) });
+    await writableStream.write(blob);
+    await writableStream.close();
+  } catch (e) {
+    console.log('aborted.');
+  }
 });
 #endif  // EMSCRIPTEN
 
