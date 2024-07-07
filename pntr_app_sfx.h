@@ -1,40 +1,12 @@
 #ifndef PNTR_APP_SFX_H__
 #define PNTR_APP_SFX_H__
 
-#include "stdint.h"
+#include <stdint.h>
 
 // Apply squareDuty to sawtooth waveform.
 #define SAWTOOTH_DUTY
 
 #define PINK_SIZE 5
-
-// do I need to do this?
-#ifndef PNTR_ENABLE_MATH
-#define PNTR_DISABLE_MATH
-#endif  // PNTR_ENABLE_MATH
-
-// This needs pow() so I support PNTR_DISABLE_MATH by polyfilling it
-#ifndef PNTR_POW
-#ifdef PNTR_DISABLE_MATH
-float _pntr_pow(float base, float exponent) {
-  float result = 1.0f;
-  if (exponent >= 0) {
-    for (int i = 0; i < exponent; i++) {
-      result *= base;
-    }
-  } else {
-    for (int i = 0; i > exponent; i--) {
-      result /= base;
-    }
-  }
-  return result;
-}
-#define PNTR_POW(x, y) _pntr_pow((x), (y))
-#else  // PNTR_DISABLE_MATH
-#include "math.h"
-#define PNTR_POW powf
-#endif  // PNTR_DISABLE_MATH
-#endif  // PNTR_POW
 
 typedef struct {
   char riff_header[4];  // Contains "RIFF"
@@ -160,7 +132,33 @@ void pntr_app_sfx_mutate(pntr_app* app, SfxParams* params, float range, uint32_t
 // load a SfxParams as a pntr_sound
 pntr_sound* pntr_app_sfx_sound(pntr_app* app, SfxParams* params);
 
+#endif  // PNTR_APP_SFX_H__
+
 #ifdef PNTR_APP_SFX_IMPLEMENTATION
+#ifndef PNTR_APP_SFX_IMPLEMENTATION_ONCE
+#define PNTR_APP_SFX_IMPLEMENTATION_ONCE
+
+#ifndef PNTR_POW
+#ifdef PNTR_ENABLE_MATH
+#include <math.h>
+#define PNTR_POW powf
+#else  // PNTR_ENABLE_MATH
+static float _pntr_pow(float base, float exponent) {
+  float result = 1.0f;
+  if (exponent >= 0) {
+    for (int i = 0; i < exponent; i++) {
+      result *= base;
+    }
+  } else {
+    for (int i = 0; i > exponent; i--) {
+      result /= base;
+    }
+  }
+  return result;
+}
+#define PNTR_POW(x, y) _pntr_pow((x), (y))
+#endif  // PNTR_ENABLE_MATH
+#endif  // PNTR_POW
 
 static int sfx_random(pntr_app* app, int range) {
   return pntr_app_random(app, 0, range);
@@ -1005,6 +1003,5 @@ pntr_sound* pntr_app_sfx_sound(pntr_app* app, SfxParams* params) {
   return s;
 }
 
+#endif  // PNTR_APP_SFX_IMPLEMENTATION_ONCE
 #endif  // PNTR_APP_SFX_IMPLEMENTATION
-
-#endif  // PNTR_APP_SFX_H__
