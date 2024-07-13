@@ -654,11 +654,11 @@ bool pntr_app_sfx_save_params(SfxParams* params, const char* fileName) {
   short int version = 200;
   short int len = 96;
   PNTR_MEMCPY(&fileData, signature, 4);
-  PNTR_MEMCPY(fileData + 4, &version, 2);
-  PNTR_MEMCPY(fileData + 6, &len, 2);
-  PNTR_MEMCPY(fileData + 8, &params, 96);
+  PNTR_MEMCPY(fileData + 4, &version, sizeof(short int));
+  PNTR_MEMCPY(fileData + 4 + sizeof(short int), &len, sizeof(short int));
+  PNTR_MEMCPY(fileData + 4 + sizeof(short int) + sizeof(short int), &params, sizeof(SfxParams));
 
-  return pntr_save_file(fileName, &fileData, 104);
+  return pntr_save_file(fileName, &fileData, 4 + sizeof(short int) * + sizeof(short int) + sizeof(SfxParams));
 }
 
 void pntr_app_sfx_gen_pickup_coin(pntr_app* app, SfxParams* sp) {
