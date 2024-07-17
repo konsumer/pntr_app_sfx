@@ -2,7 +2,7 @@ This will let you load SFX made with [rfxgen](https://raylibtech.itch.io/rfxgen)
 
 It allows you add & generate very small sound-effects to your game, with a [single header](pntr_app_sfx.h).
 
-You can see a very simple example [here](https://konsumer.js.org/pntr_app_sfx) ([source](example/pntr_app_sfx_example.c)) and an editor [here](https://konsumer.js.org/pntr_app_sfx/editor) ([source](example/pntr_app_sfx_gen.c)).
+You can see a very simple example [here](https://konsumer.js.org/pntr_app_sfx) ([source](example/pntr_app_sfx_example.c)) and an editor [here](https://konsumer.js.org/pntr_app_sfx/editor) ([source](example/pntr_app_sfx_gui.c)).
 
 
 Basic usage looks like this:

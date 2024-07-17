@@ -317,10 +317,10 @@ pntr_app Main(int argc, char* argv[]) {
   return (pntr_app){
       .width = 400,
       .height = 225,
-      .title = "pntr_app_sfx: Generator",
+      .title = "pntr_app_sfx: GUI",
       .init = Init,
       .update = Update,
       .close = Close,
       .event = Event,
-      .fps = 0};
+      .fps = 30};
 }
