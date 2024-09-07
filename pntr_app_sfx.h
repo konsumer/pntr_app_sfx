@@ -630,7 +630,7 @@ bool pntr_app_sfx_load_params(SfxParams* params, const char* fileName) {
   PNTR_MEMCPY(&len, fileData + 6, 2);
 
   // only 96 is supported
-  if (version != 96) {
+  if (len != 96) {
     pntr_set_error(PNTR_ERROR_FAILED_TO_OPEN);
     return false;
   }
